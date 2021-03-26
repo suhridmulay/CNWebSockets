@@ -6,3 +6,12 @@ Web server and client application in python
 - **server2.py** : Your server program "server2.py " will be a multi-threaded server that will create a new thread for every new client request it receives. Multiple clients should be able to simultaneously chat with the server.
 - **server3.py** : Your server program "server3.py " will be a single process server that uses the "select" method to handle multiple clients concurrently.
 - **server4.py** : Your server program "server4.py" will be an echo server (that replies the same message to the client that was received from the same client); it will be a single process server that uses the "select" method to handle multiple clients concurrently.
+
+## Done
+    - [x] client.py
+    - [x] server1.py
+    - [ ] server2.py  
+    - [ ] server3.py
+    - [ ] server4.py
+    - [ ] video
+    - [ ] screenshots
