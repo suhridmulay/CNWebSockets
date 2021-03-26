@@ -18,6 +18,7 @@ while talking:
     dialog = input('Enter  your message to server: ')
     if dialog == "bye":
         print('Terminating connection')
+        talker_socket.sendall('bye'.encode('utf-8'))
         break
     talker_socket.sendall(dialog.encode('utf-8'))
     response = talker_socket.recv(1024).decode().strip('')

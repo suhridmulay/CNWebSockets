@@ -12,6 +12,9 @@ address = (HOST_NAME, PORT_NO)
 server_sock.bind(address)
 
 server_sock.listen(10)
+print('Server listening on {}:{}'.format(HOST_NAME, PORT_NO))
+
+threads = []
 
 def handle(conn: socket.socket, addr: tuple):
     thread_id = threading.get_ident()
@@ -20,7 +23,7 @@ def handle(conn: socket.socket, addr: tuple):
         # Read the query
         request = conn.recv(1024).decode('utf-8').strip('')
         print('Client said: {}'.format(request))
-        # If request in blank break
+        # If request asks to terminate break out of loop
         if request in ('', 'bye', 'exit'):
             break   
         # Prepare response
@@ -33,11 +36,12 @@ def handle(conn: socket.socket, addr: tuple):
         # Send response
         conn.sendall(response.encode('utf-8'))
     
-    conn.sendall('bye')
+    conn.sendall('bye'.encode('utf-8'))
     conn.close()
+    threading.current_thread().join()
+
 
 SERVER_STATE = 'running'
-threads = []
 
 while SERVER_STATE == 'running':
     connection, address = server_sock.accept()
@@ -47,3 +51,5 @@ while SERVER_STATE == 'running':
 
 for thread in threads:
     thread.join()
+
+server_sock.close()
