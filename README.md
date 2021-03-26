@@ -11,7 +11,7 @@ Web server and client application in python
     - [x] client.py
     - [x] server1.py
     - [x] server2.py  
-    - [ ] server3.py
-    - [ ] server4.py
+    - [x] server3.py
+    - [x] server4.py
     - [ ] video
     - [ ] screenshots
