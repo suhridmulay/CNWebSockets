@@ -4,6 +4,8 @@ import sys
 # Create and internet socket
 server_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
+server_sock.setblocking(False)
+
 # Set up address tuple
 HOST_ADDR = 'localhost'
 PORT = input('Enter port number (default 10000): ')

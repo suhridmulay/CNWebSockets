@@ -4,6 +4,8 @@ import sys
 # Create and internet socket
 server_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
+server_sock.setblocking(False)
+
 # Set up address tuple
 HOST_ADDR = 'localhost'
 PORT = input('Enter port number (default 10000): ')
@@ -42,13 +44,13 @@ while True:
                 print('Terminating server')
                 exit()
 
-        # Otherwise the file is a socket
+        # Otherwise the file is a client socket
         elif file:
             data = file.recv(1024).decode('utf-8').strip('')
             if data:
                 # Log all incoming requests
                 print("Recieved: {}".format(data))
-                # Facility to gracefully terminate connection
+                # Provide facility to gracefully terminate connection
                 if data == 'bye':
                     print('terminating connection on client request')
                     inputs.remove(file)

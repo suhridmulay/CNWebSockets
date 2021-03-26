@@ -2,7 +2,7 @@ import socket
 
 talker_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-server = input('Enter address of server to connect to (default localhost): ')
+server = input('Enter address of server to connect to (default 127.0.0.1): ')
 if server == '':
     server = '127.0.0.1'
 
