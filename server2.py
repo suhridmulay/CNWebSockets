@@ -2,11 +2,12 @@ import socket, threading
 
 server_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
+# Set up the address tuple
 HOST_NAME: str = 'localhost'
 PORT_NO = input('Enter port number to host server on (default 10000): ')
 if PORT_NO == '':
     PORT_NO = 10000
-
+PORT_NO = int(PORT_NO)
 address = (HOST_NAME, PORT_NO)
 
 server_sock.bind(address)
