@@ -7,6 +7,13 @@ Web server and client application in python
 - **server3.py** : Your server program "server3.py " will be a single process server that uses the "select" method to handle multiple clients concurrently.
 - **server4.py** : Your server program "server4.py" will be an echo server (that replies the same message to the client that was received from the same client); it will be a single process server that uses the "select" method to handle multiple clients concurrently.
 
+## Usage
+start desired server with ````python3 serverX.py```` where X is the number of server file (1 to 4) these start at the localhost, you can specify a port at the prompt or leave it blank as it defaults to 10000.  
+
+Next up, start ````python3 continous_client.exe```` This is the client. It defaults to localhost:10000 (same as the server) but you can change the host and port if you wish to. The client displays a prompt, enter a message and begin communicating with the server.
+
+for servers 1 to 3, you can try sending basic arithmetic expressions which will be evaluated by the server and returned to you. server4 is an echo server which repeats whatever it hears from the client. 
+
 ## Done
     - [x] client.py
     - [x] server1.py
