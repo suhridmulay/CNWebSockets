@@ -47,6 +47,7 @@ SERVER_STATE = 'running'
 while SERVER_STATE == 'running':
     connection, address = server_sock.accept()
     new_t = threading.Thread(target=handle, args=(connection, address, ))
+    new_t.daemon = True
     threads.append(new_t)
     new_t.start()
 

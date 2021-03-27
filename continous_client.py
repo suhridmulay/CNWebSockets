@@ -22,5 +22,7 @@ while talking:
         break
     talker_socket.sendall(dialog.encode('utf-8'))
     response = talker_socket.recv(1024).decode().strip('')
+    if response == '':
+        print('Blank response from server. Is server dead?')
     print('Server said: {}'.format(response))
 talker_socket.close()

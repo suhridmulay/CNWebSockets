@@ -10,13 +10,14 @@ HOST = 'localhost'
 
 # Create socket
 server_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+server_sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 # Address tuple
 address = (HOST, PORT)
 
 # Bind socket to address
 server_sock.bind(address)
 # Listen for incoming connections
-server_sock.listen(10)
+server_sock.listen(1)
 
 # Notify user socket is listening
 print('server listening on {}:{}'.format(HOST, PORT))
@@ -27,8 +28,10 @@ STATE = 'running'
 # Server loop
 while STATE == 'running':
     # Accept connections
+    server_sock.listen()
     conn, addr = server_sock.accept()
     print('Accepted connection from: {}'.format(addr))
+    server_sock.shutdown(0)
 
     # Start communication
     req = conn.recv(1024).decode('utf-8').strip()
