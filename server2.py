@@ -1,5 +1,10 @@
+# Socket for networking
+# Threads for multithreading support
 import socket, threading
 
+MAX_CLIENTS = 10
+
+# Initialise the server socket
 server_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 # Set up the address tuple
@@ -10,14 +15,24 @@ if PORT_NO == '':
 PORT_NO = int(PORT_NO)
 address = (HOST_NAME, PORT_NO)
 
+# Bind the socket to said address
 server_sock.bind(address)
 
-server_sock.listen(10)
+# Listen for connections
+# Put out address on stdout
+server_sock.listen(MAX_CLIENTS)
 print('Server listening on {}:{}'.format(HOST_NAME, PORT_NO))
 
+# Create a list to store threads
 threads = []
 
+# Handler function for connection
 def handle(conn: socket.socket, addr: tuple):
+    """
+    Handler is the method that handles individual connections. 
+    It takes in the client socket, and the client address as input and
+    Handles the connection to and fro from the server to the client
+    """
     thread_id = threading.get_ident()
     print('Thread {} recieved connection from {}'.format(thread_id, addr))
     while True:
@@ -44,14 +59,23 @@ def handle(conn: socket.socket, addr: tuple):
 
 SERVER_STATE = 'running'
 
-while SERVER_STATE == 'running':
-    connection, address = server_sock.accept()
-    new_t = threading.Thread(target=handle, args=(connection, address, ))
-    new_t.daemon = True
-    threads.append(new_t)
-    new_t.start()
 
+while SERVER_STATE == 'running':
+   # Accept a client and store its details
+   connection, address = server_sock.accept()
+   # Assign a worker thread to the client
+   new_t = threading.Thread(target=handle, args=(connection, address, ))
+   # Set the new thread up to be a Daemon
+   # Thus newly created threads won't block main from exiting
+   new_t.daemon = True
+   # Append to a list of threads
+   threads.append(new_t)
+   # Start the thread
+   new_t.start()
+
+# Catch any stray threads (although there should be none)
 for thread in threads:
     thread.join()
 
+# Close socket
 server_sock.close()
