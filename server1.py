@@ -31,10 +31,12 @@ while STATE == 'running':
     server_sock.listen()
     conn, addr = server_sock.accept()
     print('Accepted connection from: {}'.format(addr))
+    # Shutdown the socket so that new connections are no longer entertained
     server_sock.shutdown(0)
 
     # Start communication
     req = conn.recv(1024).decode('utf-8').strip()
+
     # Continue until server recieves a bye
     while req != 'bye':
         # Log out client's response
@@ -50,6 +52,9 @@ while STATE == 'running':
         conn.sendall(response.encode('utf-8'))
         # Fetch next query
         req = conn.recv(1024).decode('utf-8').strip()
+
+    print('[ACTION] Terminating connection with {}'.format(addr))
+    print('[REASON] Client said \'bye\'')
     
     # Send bye to client
     conn.sendall('bye'.encode('utf-8'))

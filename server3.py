@@ -3,22 +3,27 @@ import sys
 
 # Create and internet socket
 server_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+server_sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
+# Set the socket to non blocking
 server_sock.setblocking(False)
 
 # Set up address tuple
 HOST_ADDR = 'localhost'
-PORT = input('Enter port number (default 10000): ')
-if PORT == '':
-    PORT = 10000
-PORT = int(PORT)
-address = (HOST_ADDR, PORT)
+PORT_NO = 10000
+if sys.argv[1]:
+    PORT_NO = sys.argv[1]
+else:
+    print('No port specified in arguments')
+    PORT_NO = input('Enter port number to host server on (default 10000): ')
+PORT_NO = int(PORT_NO)
+address = (HOST_ADDR, PORT_NO)
 
 # Bind socket to address
 server_sock.bind(address)
 server_sock.listen(10)
 
-print("Server listening at {}:{}".format(HOST_ADDR, PORT))
+print("Server listening at {}:{}".format(HOST_ADDR, PORT_NO))
 
 # Initialise list of inputs and outputs
 inputs = [server_sock]

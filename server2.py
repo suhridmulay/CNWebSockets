@@ -1,17 +1,21 @@
 # Socket for networking
 # Threads for multithreading support
-import socket, threading
+import socket, threading, sys
 
 MAX_CLIENTS = 10
 
 # Initialise the server socket
 server_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+server_sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
 # Set up the address tuple
 HOST_NAME: str = 'localhost'
-PORT_NO = input('Enter port number to host server on (default 10000): ')
-if PORT_NO == '':
-    PORT_NO = 10000
+PORT_NO = 10000
+if sys.argv[1]:
+    PORT_NO = sys.argv[1]
+else:
+    print('No port specified in arguments')
+    PORT_NO = input('Enter port number to host server on (default 10000): ')
 PORT_NO = int(PORT_NO)
 address = (HOST_NAME, PORT_NO)
 
@@ -48,13 +52,14 @@ def handle(conn: socket.socket, addr: tuple):
             query_soln = eval(request)
             response = '[Thread {}] says: {}'.format(thread_id, query_soln)
         except Exception:
-            response = '[Thread {}] says: {}'.format(thread_id, 'Bad query in request')      
+            response = '[Thread {}] says: {}'.format(thread_id, 'Bad query in request, please enter a valid expression')      
         # Send response
         conn.sendall(response.encode('utf-8'))
+        print('Responding with: {}'.format(response))
     
     conn.sendall('bye'.encode('utf-8'))
     conn.close()
-    threading.current_thread().join()
+    return
 
 
 SERVER_STATE = 'running'

@@ -14,6 +14,11 @@ Next up, start ````python3 continous_client.exe```` This is the client. It defau
 
 for servers 1 to 3, you can try sending basic arithmetic expressions which will be evaluated by the server and returned to you. server4 is an echo server which repeats whatever it hears from the client. 
 
+## Notes
+If you are running on MacOS, you might need to run ````server1_u.py```` instead of ````server1.py```` due to some undocumented OS Specific behavious by sockets API on MacOS
+
+This repository can be found on github at http://www.github.com/suhridmulay/CNWebSockets
+
 ## Done
     - [x] client.py
     - [x] server1.py
